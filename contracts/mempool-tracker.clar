@@ -140,3 +140,30 @@
         )
     )
 )
+
+(define-public (add-to-watchlist (user principal) (tx-id (string-ascii 64)))
+    (let (
+        (current-watchlist (default-to {tx-ids: (list), alert-threshold: u0, notifications-enabled: false}
+            (map-get? user-watchlists {user: user})))
+    )
+        (asserts! (< (len (get tx-ids current-watchlist)) u100) ERR-INVALID-PARAMS)
+        (map-set user-watchlists
+            {user: user}
+            (merge current-watchlist 
+                {tx-ids: (unwrap! (as-max-len? (append (get tx-ids current-watchlist) tx-id) u100) ERR-INVALID-PARAMS)}
+            )
+        )
+        (ok true)
+    )
+)
+
+(define-public (update-fee-statistics (block-height uint) (stats {avg-fee: uint, min-fee: uint, max-fee: uint, recommended-low: uint, recommended-medium: uint, recommended-high: uint, total-tx-count: uint}))
+    (begin
+        (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+        (map-set fee-stats
+            {block-height: block-height}
+            stats
+        )
+        (ok true)
+    )
+)
