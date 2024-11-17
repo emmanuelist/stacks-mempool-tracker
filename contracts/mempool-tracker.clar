@@ -68,3 +68,11 @@
 (define-private (is-contract-owner)
     (is-eq tx-sender (var-get contract-owner))
 )
+
+;; Utility functions
+(define-private (validate-fee-rate (fee-rate uint))
+    (if (>= fee-rate (var-get min-fee-threshold))
+        true
+        false
+    )
+)
