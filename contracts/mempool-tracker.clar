@@ -88,3 +88,12 @@
         )
     )
 )
+
+(define-private (estimate-confirmation-time (fee-rate uint) (congestion uint))
+    (let (
+        (base-time u600) ;; 10 minutes in seconds
+        (congestion-multiplier (+ u1 (/ congestion u100)))
+    )
+        (* base-time congestion-multiplier)
+    )
+)
