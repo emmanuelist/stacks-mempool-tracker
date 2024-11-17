@@ -175,3 +175,7 @@
 (define-read-only (get-user-watchlist (user principal))
     (ok (map-get? user-watchlists {user: user}))
 )
+
+(define-read-only (get-fee-statistics (block-height uint))
+    (ok (map-get? fee-stats {block-height: block-height}))
+)
