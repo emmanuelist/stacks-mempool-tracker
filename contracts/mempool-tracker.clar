@@ -124,3 +124,19 @@
         (ok true)
     )
 )
+
+(define-public (update-transaction-status (tx-id (string-ascii 64)) (confirmed bool))
+    (begin
+        (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+        (match (map-get? tracked-transactions {tx-id: tx-id})
+            tx-data (begin
+                (map-set tracked-transactions
+                    {tx-id: tx-id}
+                    (merge tx-data {confirmed: confirmed})
+                )
+                (ok true)
+            )
+            ERR-NOT-FOUND
+        )
+    )
+)
