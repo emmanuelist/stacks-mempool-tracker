@@ -33,4 +33,17 @@
         alert-threshold: uint,
         notifications-enabled: bool
     }
+
+
+(define-map fee-stats
+    {block-height: uint}
+    {
+        avg-fee: uint,
+        min-fee: uint,
+        max-fee: uint,
+        recommended-low: uint,
+        recommended-medium: uint,
+        recommended-high: uint,
+        total-tx-count: uint
+    }
 )
