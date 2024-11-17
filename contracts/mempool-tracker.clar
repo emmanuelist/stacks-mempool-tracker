@@ -179,3 +179,12 @@
 (define-read-only (get-fee-statistics (block-height uint))
     (ok (map-get? fee-stats {block-height: block-height}))
 )
+
+(define-private (get-congestion-level)
+    (let (
+        (current-metrics (default-to {size: u0, tx-count: u0, avg-confirmation-time: u0, congestion-level: u0}
+            (map-get? mempool-metrics {timestamp: (var-get last-update)})))
+    )
+        (get congestion-level current-metrics)
+    )
+)
