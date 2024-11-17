@@ -33,7 +33,7 @@
         alert-threshold: uint,
         notifications-enabled: bool
     }
-
+)
 
 (define-map fee-stats
     {block-height: uint}
@@ -45,5 +45,15 @@
         recommended-medium: uint,
         recommended-high: uint,
         total-tx-count: uint
+    }
+)
+
+(define-map mempool-metrics
+    {timestamp: uint}
+    {
+        size: uint,
+        tx-count: uint,
+        avg-confirmation-time: uint,
+        congestion-level: uint
     }
 )
