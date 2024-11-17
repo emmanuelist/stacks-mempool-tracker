@@ -167,3 +167,7 @@
         (ok true)
     )
 )
+
+(define-read-only (get-transaction-details (tx-id (string-ascii 64)))
+    (ok (map-get? tracked-transactions {tx-id: tx-id}))
+)
