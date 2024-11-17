@@ -97,3 +97,30 @@
         (* base-time congestion-multiplier)
     )
 )
+
+;; Core functions
+(define-public (track-transaction (tx-id (string-ascii 64)) (fee-rate uint) (size uint) (category (string-ascii 20)))
+    (let (
+        (priority (calculate-priority fee-rate size))
+        (current-time (unwrap! (get-block-info? time (- block-height u1)) (err u500)))
+    )
+        (asserts! (validate-fee-rate fee-rate) ERR-INVALID-FEE)
+        (asserts! (not (default-to false (get confirmed (map-get? tracked-transactions {tx-id: tx-id})))) ERR-ALREADY-EXISTS)
+        
+        (map-set tracked-transactions
+            {tx-id: tx-id}
+            {
+                fee-rate: fee-rate,
+                size: size,
+                priority: priority,
+                timestamp: current-time,
+                confirmed: false,
+                category: category,
+                prediction: (estimate-confirmation-time fee-rate (get-congestion-level))
+            }
+        )
+        
+        (var-set total-tracked-tx (+ (var-get total-tracked-tx) u1))
+        (ok true)
+    )
+)
