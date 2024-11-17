@@ -63,3 +63,8 @@
 (define-data-var last-update uint u0)
 (define-data-var total-tracked-tx uint u0)
 (define-data-var min-fee-threshold uint u1) ;; in sats/byte
+
+;; Authorization check
+(define-private (is-contract-owner)
+    (is-eq tx-sender (var-get contract-owner))
+)
