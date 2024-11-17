@@ -76,3 +76,15 @@
         false
     )
 )
+
+(define-private (calculate-priority (fee-rate uint) (size uint))
+    (let (
+        (priority-score (* fee-rate size))
+    )
+        (cond
+            ((>= priority-score u100000) u3) ;; high priority
+            ((>= priority-score u50000) u2)  ;; medium priority
+            (true u1)                        ;; low priority
+        )
+    )
+)
