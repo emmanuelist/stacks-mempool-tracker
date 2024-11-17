@@ -204,3 +204,12 @@
         )
     )
 )
+
+;; Admin functions
+(define-public (set-min-fee-threshold (new-threshold uint))
+    (begin
+        (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+        (var-set min-fee-threshold new-threshold)
+        (ok true)
+    )
+)
