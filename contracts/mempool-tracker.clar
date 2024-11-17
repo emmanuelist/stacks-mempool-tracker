@@ -57,3 +57,9 @@
         congestion-level: uint
     }
 )
+
+;; Data variables
+(define-data-var contract-owner principal tx-sender)
+(define-data-var last-update uint u0)
+(define-data-var total-tracked-tx uint u0)
+(define-data-var min-fee-threshold uint u1) ;; in sats/byte
