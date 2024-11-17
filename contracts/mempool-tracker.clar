@@ -188,3 +188,19 @@
         (get congestion-level current-metrics)
     )
 )
+
+(define-public (update-mempool-metrics (metrics {size: uint, tx-count: uint, avg-confirmation-time: uint, congestion-level: uint}))
+    (begin
+        (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+        (let (
+            (current-time (unwrap! (get-block-info? time (- block-height u1)) (err u500)))
+        )
+            (map-set mempool-metrics
+                {timestamp: current-time}
+                metrics
+            )
+            (var-set last-update current-time)
+            (ok true)
+        )
+    )
+)
