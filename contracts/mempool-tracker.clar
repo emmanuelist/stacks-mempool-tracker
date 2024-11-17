@@ -11,3 +11,17 @@
 (define-constant ERR-NOT-FOUND (err u1002))
 (define-constant ERR-ALREADY-EXISTS (err u1003))
 (define-constant ERR-INVALID-FEE (err u1004))
+
+;; Data structures
+(define-map tracked-transactions 
+    {tx-id: (string-ascii 64)}
+    {
+        fee-rate: uint,
+        size: uint,
+        priority: uint,
+        timestamp: uint,
+        confirmed: bool,
+        category: (string-ascii 20),
+        prediction: uint
+    }
+)
