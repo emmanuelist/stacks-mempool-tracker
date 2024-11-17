@@ -25,3 +25,12 @@
         prediction: uint
     }
 )
+
+(define-map user-watchlists
+    {user: principal}
+    {
+        tx-ids: (list 100 (string-ascii 64)),
+        alert-threshold: uint,
+        notifications-enabled: bool
+    }
+)
